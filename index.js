@@ -7,6 +7,7 @@ require('dotenv').config();
 const openWeatherMap = require('./lib/WeatherMap') // multiple imports
 const openHarryPotter = require('./lib/HarryPotter')
 const openNASA = require('./lib/NASA')
+const openPokemon = require('./lib/Pokemon')
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,15 +37,33 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/harrypotter', async (req, res) => {
-    let potterData = await openHarryPotter.getSortingHat();
-    console.log(potterData);
-    res.render('harrypotter', { potterData })
+    let hatData = await openHarryPotter.getSortingHat();
+    console.log(hatData);
+    res.render('harrypotter', { hatData })
 });
 
 app.get('/nasa', async (req, res) => {
-    let nasaData = await openNASA.getNASAData();
-    console.log(nasaData);
-    res.render('nasa', { nasaData })
+    let photoData = await openNASA.getNASAPhotoData();
+    console.log(photoData);
+    let copyright = photoData.copyright;
+    let date = photoData.date;
+    res.render('nasa', { copyright, date })
+})
+
+app.get('/nasaasteroid', async (req, res) => {
+    let asteroidData = await openNASA.getNASAAsteroidData();
+    console.log(asteroidData);
+    let element_count = asteroidData.element_count
+    res.render('nasaasteroid', { element_count })
+})
+
+app.get('/pokemon', async (req, res) => {
+    let pokeData = await openPokemon.getPokemon();
+    console.log(pokeData);
+    let name = pokeData.name;
+    let abilityOne = pokeData.abilities[0].ability.name;
+    let abilityTwo = pokeData.abilities[1].ability.name;
+    res.render('pokemon', { name, abilityOne, abilityTwo })
 })
 
 app.listen(3000, () => {
