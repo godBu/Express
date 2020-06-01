@@ -1,2 +1,8 @@
-<p>{{ name }}</p>
-<p>{{ intelligence }}</p>
+<form action="/superhero" method="post">
+    <input type="number" name="number">
+    <input type="submit" value="submit">
+</form>
+
+{{#each powerData}}
+<p>{{this}}</p>
+{{/each}}

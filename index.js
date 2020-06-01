@@ -2,6 +2,7 @@ const express = require('express'); //npm i express
 const handleBars = require('express-handlebars'); //npm i express-handlebars // https://handlebarsjs.com
 const path = require('path'); //built-in module like fs
 const app = express(); // initialising the express function and its features - https://npmjs.com/package/express
+const bodyParser = require('body-parser'); //npm i body-parser
 require('dotenv').config();
 
 const openWeatherMap = require('./lib/WeatherMap') // multiple imports
@@ -10,6 +11,8 @@ const openNASA = require('./lib/NASA')
 const openPokemon = require('./lib/Pokemon')
 const openSuperHero = require('./lib/SuperHero')
 
+app.use(bodyParser.urlencoded({extended: false})); //ignore data types and make everything a string
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('.hbs', handleBars({
@@ -69,13 +72,25 @@ app.get('/pokemon', async (req, res) => {
 })
 
 app.get('/superhero', async (req, res) => {
-    let powerData = await openSuperHero.getCharacterPowerStats();
-    console.log(powerData);
-    let name = powerData.name;
-    let intelligence = powerData.intelligence;
-    res.render('superhero', { name, intelligence });
+    //let powerData = await openSuperHero.getCharacterPowerStats();
+    //console.log(powerData);
+    //let name = powerData.name;
+    //let intelligence = powerData.intelligence;
+    res.render('superhero' /*{ name, intelligence }/*/);
 })
 
+app.post('/superhero', async (req, res) => {
+    let number = req.body.number
+    let powerData = await openSuperHero.getCharacterPowerStats(number);
+    //let response  = await openSuperHero.getCharacterPowerStats(number);
+    let name = powerData.name;
+    let intelligence = powerData.intelligence;
+    res.render('superhero', {
+         powerData: {
+             name, intelligence
+        } 
+    })
+})
 app.listen(3000, () => {
     console.log('listen to port');
 
