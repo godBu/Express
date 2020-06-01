@@ -8,6 +8,7 @@ const openWeatherMap = require('./lib/WeatherMap') // multiple imports
 const openHarryPotter = require('./lib/HarryPotter')
 const openNASA = require('./lib/NASA')
 const openPokemon = require('./lib/Pokemon')
+const openSuperHero = require('./lib/SuperHero')
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,14 +48,15 @@ app.get('/nasa', async (req, res) => {
     console.log(photoData);
     let copyright = photoData.copyright;
     let date = photoData.date;
-    res.render('nasa', { copyright, date })
-})
+    res.render('nasa', { copyright, date });
+    /*boolean: true*/
+});
 
 app.get('/nasaasteroid', async (req, res) => {
     let asteroidData = await openNASA.getNASAAsteroidData();
     console.log(asteroidData);
     let element_count = asteroidData.element_count
-    res.render('nasaasteroid', { element_count })
+    res.render('nasaasteroid', { element_count });
 })
 
 app.get('/pokemon', async (req, res) => {
@@ -64,6 +66,14 @@ app.get('/pokemon', async (req, res) => {
     let abilityOne = pokeData.abilities[0].ability.name;
     let abilityTwo = pokeData.abilities[1].ability.name;
     res.render('pokemon', { name, abilityOne, abilityTwo })
+})
+
+app.get('/superhero', async (req, res) => {
+    let powerData = await openSuperHero.getCharacterPowerStats();
+    console.log(powerData);
+    let name = powerData.name;
+    let intelligence = powerData.intelligence;
+    res.render('superhero', { name, intelligence });
 })
 
 app.listen(3000, () => {
