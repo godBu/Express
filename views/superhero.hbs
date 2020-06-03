@@ -1,8 +1,12 @@
 <form action="/superhero" method="post">
     <input type="number" name="number">
-    <input type="submit" value="submit">
+    <input type="submit" value="superhero!">
 </form>
 
-{{#each powerData}}
-<p>{{this}}</p>
+{{#each response}}
+<p>{{@key}}: {{this}}</p>
 {{/each}}
+
+<!--{{#each powerData}}
+<p>{{this}}</p>
+{{/each}}-->

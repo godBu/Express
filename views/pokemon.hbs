@@ -1,3 +1,15 @@
-<p>Name: {{ name }}</p>
-<p>Ability One: {{ abilityOne }}</p>
-<p>Ability Two: {{ abilityTwo }}</p>
+<form action="/pokemon" method="post">
+    <input type="number" name="id">
+    <input type="submit" value="pokemon!">
+</form>
+
+
+{{#each response}}
+<p>{{@key}}: {{this}}</p>
+{{/each}}
+
+<!--{{#each pokeData}}
+<p>{{this}}</p>
+{{/each}}-->
+
+ <!--<button type="submit" value="submit">pokemon</button>-->

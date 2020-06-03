@@ -1,5 +1,16 @@
 <h1>Photo of the Day</h1>
+{{#each photoData}}
+<p>{{this}}</p>
+{{/each}}
+
+<img class="image" src="{{image}}">
+
+<!--
 <ul>
     <li>Copyright: {{ copyright }}</li>
     <li>Date: {{ date }}</li>
 </ul>
+{{#each response}}
+<p>{{@key}}: {{this}}</p>
+{{/each}}
+-->
